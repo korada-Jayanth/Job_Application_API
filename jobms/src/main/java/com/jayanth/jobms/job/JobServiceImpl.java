@@ -2,6 +2,7 @@ package com.jayanth.jobms.job;
 
 import com.jayanth.jobms.dto.JobWithCompanyDTO;
 import com.jayanth.jobms.external.company;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -14,6 +15,9 @@ import java.util.stream.Collectors;
 public class JobServiceImpl implements JobService {
 
     private final JobRepository jobRepository;
+
+    @Autowired
+    RestTemplate restTemplate;
 
     public JobServiceImpl(JobRepository jobRepository) {
         this.jobRepository = jobRepository;
@@ -33,9 +37,9 @@ public class JobServiceImpl implements JobService {
         JobWithCompanyDTO jobWithCompanyDTO = new JobWithCompanyDTO();
         jobWithCompanyDTO.setJob(job);
 
-        RestTemplate restTemplate = new RestTemplate();
+        //RestTemplate restTemplate = new RestTemplate();
         company company = restTemplate.getForObject(
-                "http://localhost:8082/companies/"+job.getCompanyId(),
+                "http://COMPANYMS:8082/companies/"+job.getCompanyId(),
                 company.class);
         jobWithCompanyDTO.setCompany(company);
     return jobWithCompanyDTO;
@@ -50,8 +54,9 @@ public class JobServiceImpl implements JobService {
 
     // GET job by id
     @Override
-    public Job getJobById(Long id) {
-        return jobRepository.findById(id).orElse(null);
+    public JobWithCompanyDTO getJobById(Long id) {
+        Job job = jobRepository.findById(id).orElse(null);
+        return convertToDto(job);
     }
 
     // DELETE job
