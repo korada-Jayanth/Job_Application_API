@@ -2,6 +2,7 @@ package com.jayanth.jobms.job;
 
 import com.jayanth.jobms.dto.JobWithCompanyDTO;
 import com.jayanth.jobms.external.company;
+import com.jayanth.jobms.mapper.JobMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -34,13 +35,13 @@ public class JobServiceImpl implements JobService {
     }
 
     private JobWithCompanyDTO convertToDto(Job job){
-        JobWithCompanyDTO jobWithCompanyDTO = new JobWithCompanyDTO();
-        jobWithCompanyDTO.setJob(job);
+
 
         //RestTemplate restTemplate = new RestTemplate();
         company company = restTemplate.getForObject(
                 "http://COMPANYMS:8082/companies/"+job.getCompanyId(),
                 company.class);
+        JobWithCompanyDTO jobWithCompanyDTO = JobMapper.maptoJobWithCompanyDTO(job,company);
         jobWithCompanyDTO.setCompany(company);
     return jobWithCompanyDTO;
 
