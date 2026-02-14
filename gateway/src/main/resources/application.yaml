@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: gateway
+
+  cloud:
+    gateway:
+      routes:
+
+        - id: companyms
+          uri: http://localhost:8082
+          predicates:
+            - Path=/company/**
+          filters:
+            - StripPrefix=1
+
+        - id: jobms
+          uri: lb://JOBSERVICEDEFAULT
+          predicates:
+            - Path=/job/**
+          filters:
+            - StripPrefix=1
+
+        - id: reviewms
+          uri: lb://REVIEWMS
+          predicates:
+            - Path=/review/**
+          filters:
+            - StripPrefix=1
+
+server:
+  port: 8085
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka

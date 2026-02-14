@@ -1,6 +1,9 @@
 spring:
   application:
     name: jobms
+  config:
+    import: optional:configserver:http://localhost:8084
+
   datasource:
     url: jdbc:mysql://localhost:3306/jobms?useSSL=false&serverTimezone=UTC
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -14,6 +17,7 @@ spring:
     properties:
       hibernate:
         format_sql: true
+
 server:
   port: 8081
 
