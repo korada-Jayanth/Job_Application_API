@@ -1,9 +1,12 @@
 package com.jayanth.jobms.dto;
 
 
-import com.jayanth.jobms.job.Job;
+import com.jayanth.jobms.external.Review;
 import com.jayanth.jobms.external.company;
-public class JobWithCompanyDTO {
+
+import java.util.List;
+
+public class JobDTO {
     private Long id;
     private String title;
     private String description;
@@ -11,6 +14,7 @@ public class JobWithCompanyDTO {
     private String maxSalary;
     private String location;
     private company company;
+    private List<Review> reviews;
 
     public Long getId() {
         return id;
@@ -66,5 +70,13 @@ public class JobWithCompanyDTO {
 
     public void setCompany(company company) {
         this.company = company;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
     }
 }

@@ -1,21 +1,26 @@
 package com.jayanth.jobms.mapper;
 
-import com.jayanth.jobms.dto.JobWithCompanyDTO;
+import com.jayanth.jobms.dto.JobDTO;
+import com.jayanth.jobms.external.Review;
 import com.jayanth.jobms.job.Job;
 import com.jayanth.jobms.external.company;
-public class JobMapper {
-    public static JobWithCompanyDTO maptoJobWithCompanyDTO(
-            Job job,
-            company company) {
-        JobWithCompanyDTO jobWithCompanyDTO = new JobWithCompanyDTO();
-        jobWithCompanyDTO.setId(job.getId());
-        jobWithCompanyDTO.setTitle(job.getTitle());
-        jobWithCompanyDTO.setDescription(job.getDescription());
-        jobWithCompanyDTO.setLocation(job.getLocation());
-        jobWithCompanyDTO.setMaxSalary(job.getMaxSalary());
-        jobWithCompanyDTO.setMinSalary(job.getMinSalary());
-        jobWithCompanyDTO.setCompany(company);
 
-        return jobWithCompanyDTO;
+import java.util.List;
+
+public class JobMapper {
+    public static JobDTO maptoJobWithCompanyDTO(
+            Job job,
+            company company, List<Review> reviews) {
+        JobDTO jobDTO = new JobDTO();
+        jobDTO.setId(job.getId());
+        jobDTO.setTitle(job.getTitle());
+        jobDTO.setDescription(job.getDescription());
+        jobDTO.setLocation(job.getLocation());
+        jobDTO.setMaxSalary(job.getMaxSalary());
+        jobDTO.setMinSalary(job.getMinSalary());
+        jobDTO.setCompany(company);
+        jobDTO.setReviews(reviews);
+
+        return jobDTO;
     }
 }
