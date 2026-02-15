@@ -1,5 +1,6 @@
 package com.jayanth.companyms.company;
 
+import com.jayanth.companyms.company.dto.ReviewMessage;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -53,4 +54,10 @@ public class companyServiceImpl implements companyService{
     public company getCompanyById(Long id) {
          return companyRepository.findById(id).orElse(null);
     }
+
+    @Override
+    public void updateCompanyRating(ReviewMessage reviewMessage) {
+
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.jayanth.reviewms.Reviews;
 
+import com.jayanth.reviewms.Reviews.messaging.ReviewMessageProducer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,9 +11,11 @@ import java.util.List;
 @RequestMapping("/reviews")
 public class reviewController {
     private final reviewService reviewService;
+    private final ReviewMessageProducer reviewMessageProducer;
 
-    public reviewController(reviewService reviewService){
+    public reviewController(reviewService reviewService, ReviewMessageProducer reviewMessageProducer){
         this.reviewService = reviewService;
+        this.reviewMessageProducer = reviewMessageProducer;
     }
 
     @GetMapping
@@ -24,7 +27,9 @@ public class reviewController {
     public ResponseEntity<String> addReview(@RequestParam Long companyId, @RequestBody Review review){
         boolean isReviewSaved = reviewService.addReview(companyId,review);
         if(isReviewSaved) {
+            reviewMessageProducer.SendMessage(review);
             return new ResponseEntity<>("new review added successfully", HttpStatus.CREATED);
+
         }
         else{
             return new ResponseEntity<>("Review not added",HttpStatus.NOT_FOUND);

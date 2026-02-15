@@ -2,6 +2,8 @@ package com.jayanth.companyms.company;
 
 
 
+import com.jayanth.companyms.company.dto.ReviewMessage;
+
 import java.util.List;
 
 public interface companyService {
@@ -11,4 +13,5 @@ public interface companyService {
     void createCompany(company company);
     boolean deleteCompany(Long id);
     company getCompanyById(Long id);
+    public void updateCompanyRating(ReviewMessage reviewMessage);
 }
